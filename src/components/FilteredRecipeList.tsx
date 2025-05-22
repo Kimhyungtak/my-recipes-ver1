@@ -16,19 +16,21 @@ export default function FilteredRecipeList() {
 	const searchRecipes = async (ingredients: string[]) => {
 		if (ingredients.length === 0) {
 			setRecipes([])
-		return
+			return
 		}
 
 		setLoading(true)
+
 		const { data, error } = await supabase
 			.schema('recipes')
 			.rpc('search_recipes_by_ingredients', {
-			ingredients_param: ingredients
+				ingredients_param: ingredients
 			})
 			.select();
 
-			console.log('RPC data:', data);
-			console.log('RPC error:', error);
+		console.log('RPC data:', data);
+		console.log('RPC error:', error);
+	
 		if (error) {
 			console.error('검색 오류:', error)
 			setRecipes([])
@@ -42,8 +44,12 @@ export default function FilteredRecipeList() {
 		<div className="my-6">
 			<h2 className="text-xl font-semibold mb-2">재료로 요리 검색하기</h2>
 			<IngredientSearchForm onSearch={searchRecipes} />
+
+		
 			{loading ? (
 				<p>검색 중...</p>
+			) : recipes.length === 0 ? (
+				<p>검색된 요리가 없습니다.</p>
 			) : (
 				<ul className="list-disc pl-6">
 					{recipes.map(recipe => (

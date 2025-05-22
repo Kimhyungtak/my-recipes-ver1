@@ -10,7 +10,7 @@ export default function IngredientSearchForm({ onSearch }: IngredientSearchFormP
   const [input, setInput] = useState('')
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault()
-	
+
 		const ingredients = input.split(',')
 			.map(item => item.trim())
 			.filter(item => item.length > 0)
